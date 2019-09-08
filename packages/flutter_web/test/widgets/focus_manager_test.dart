@@ -11,7 +11,7 @@ import 'package:flutter_web/widgets.dart';
 import 'package:flutter_web_test/flutter_web_test.dart';
 
 void sendFakeKeyEvent(Map<String, dynamic> data) {
-  BinaryMessages.handlePlatformMessage(
+  ServicesBinding.instance.defaultBinaryMessenger.handlePlatformMessage(
     SystemChannels.keyEvent.name,
     SystemChannels.keyEvent.codec.encodeMessage(data),
     (ByteData data) {},

@@ -11,6 +11,8 @@ import 'dart:typed_data';
 import 'package:flutter_web/foundation.dart';
 import 'package:flutter_web/services.dart';
 
+import 'binding.dart';
+
 /// A collection of resources used by the application.
 ///
 /// Asset bundles contain resources, such as images and strings, that can be
@@ -215,7 +217,7 @@ class PlatformAssetBundle extends CachingAssetBundle {
   Future<ByteData> load(String key) async {
     final Uint8List encoded =
         utf8.encoder.convert(new Uri(path: Uri.encodeFull(key)).path);
-    final ByteData asset = await BinaryMessages.send(
+    final ByteData asset = await ServicesBinding.instance.defaultBinaryMessenger.send(
         'flutter/assets', encoded.buffer.asByteData());
     if (asset == null) throw new FlutterError('Unable to load asset: $key');
     return asset;

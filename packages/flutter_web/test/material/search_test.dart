@@ -74,7 +74,7 @@ void main() {
     // Simulate system back button
     final ByteData message =
         const JSONMethodCodec().encodeMethodCall(const MethodCall('popRoute'));
-    await BinaryMessages.handlePlatformMessage(
+    await ServicesBinding.instance.defaultBinaryMessenge.handlePlatformMessage(
         'flutter/navigation', message, (_) {});
     await tester.pumpAndSettle();
 
