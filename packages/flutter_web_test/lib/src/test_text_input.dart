@@ -35,6 +35,9 @@ class TestTextInput {
   /// first be requested, e.g. using [WidgetTester.showKeyboard].
   final VoidCallback onCleared;
 
+  /// The messenger which sends the bytes for this channel, not null.
+  BinaryMessenger get _binaryMessenger => ServicesBinding.instance.defaultBinaryMessenger;
+
   int _client = 0;
 
   /// Arguments supplied to the TextInput.setClient method call.
@@ -82,7 +85,7 @@ class TestTextInput {
     if (_client == 0)
       throw TestFailure(
           'Tried to use TestTextInput with no keyboard attached. You must use WidgetTester.showKeyboard() first.');
-    BinaryMessages.handlePlatformMessage(
+    _binaryMessenger.handlePlatformMessage(
       SystemChannels.textInput.name,
       SystemChannels.textInput.codec.encodeMethodCall(
         MethodCall(
@@ -115,7 +118,7 @@ class TestTextInput {
 
       final Completer<Null> completer = Completer<Null>();
 
-      BinaryMessages.handlePlatformMessage(
+      _binaryMessenger.handlePlatformMessage(
         SystemChannels.textInput.name,
         SystemChannels.textInput.codec.encodeMethodCall(
           MethodCall(
